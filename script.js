@@ -6,15 +6,17 @@ function loadImage(changeEvent) {
         return;
     }
     const imageFile = changeEvent.target.files[0];
-    const canvas = document.getElementById('image');
-    canvas.title = imageFile.name;
-
-    const reader = new FileReader();
-    reader.onload = event => {
-        canvas.src = event.target.result;
-        console.log('image loaded');
+    
+    // load into canvas
+    const canvas = document.getElementById('glCanvas');
+    const ctx = canvas.getContext("2d"); // CanvasRenderingContext2D
+    const image = new Image();
+    image.title = imageFile.name;
+    image.onload = () => {
+        ctx.drawImage(image, 0, 0);
+        console.log('canvas loaded');
     }
-    reader.readAsDataURL(imageFile);
+    image.src = URL.createObjectURL(imageFile);
 }
 
 function webgl() {
